@@ -1,0 +1,26 @@
+.global-toast {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--color-ink-plum);
+  color: var(--color-cream-paper);
+  font-family: var(--font-body);
+  padding: 1rem 1.5rem;
+  border-radius: 9999px;
+  box-shadow: 0 4px 12px rgba(59, 42, 46, 0.2);
+  z-index: 100;
+  text-align: center;
+  animation: slide-up 0.3s ease;
+}
+
+@keyframes slide-up {
+  from {
+    transform: translate(-50%, 100%);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+}

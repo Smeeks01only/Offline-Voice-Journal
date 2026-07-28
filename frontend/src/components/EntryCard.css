@@ -1,0 +1,90 @@
+.entry-card {
+  background-color: var(--color-cream-paper);
+  border-radius: 20px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(59, 42, 46, 0.05);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  text-decoration: none;
+  color: inherit;
+}
+
+.entry-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(59, 42, 46, 0.12);
+}
+
+.entry-status-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.chevron-icon {
+  width: 20px;
+  height: 20px;
+  color: var(--color-ink-plum);
+  opacity: 0.4;
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.entry-card:hover .chevron-icon {
+  transform: translateX(4px);
+  opacity: 0.8;
+}
+
+.entry-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.entry-date {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--color-ink-plum);
+  opacity: 0.7;
+}
+
+.entry-snippet {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--color-ink-plum);
+  margin: 0;
+}
+
+.entry-snippet.placeholder {
+  opacity: 0.6;
+  font-style: italic;
+}
+
+.mood-pill {
+  background-color: var(--color-dusty-rose);
+  color: var(--color-ink-plum);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.status-indicator {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-sage-whisper);
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+.status-indicator.error {
+  color: #d32f2f; /* muted red */
+  opacity: 0.8;
+}

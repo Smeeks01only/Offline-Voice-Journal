@@ -1,0 +1,236 @@
+.home-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+.home-header h1 {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  color: var(--color-ink-plum);
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+@media (min-width: 768px) {
+  .home-header {
+    display: none;
+  }
+}
+
+.home-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.card {
+  border-radius: 20px;
+  padding: 1.5rem;
+  box-shadow: 0 8px 24px rgba(59, 42, 46, 0.08);
+}
+
+.card h2 {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: var(--color-ink-plum);
+}
+
+.cta-card {
+  background-color: var(--color-coral-bloom);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+  text-align: center;
+}
+
+.cta-label {
+  color: var(--color-cream-paper);
+  font-family: var(--font-body);
+  font-weight: 500;
+  margin-top: 1.5rem;
+  margin-bottom: 0;
+  min-height: 1.5rem; /* prevent layout shift */
+  transition: opacity 0.3s ease;
+}
+
+.recent-card, .insight-card {
+  background-color: var(--color-cream-paper);
+}
+
+.recent-entry-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+
+.clickable-card {
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: block;
+  color: inherit;
+}
+
+.clickable-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(59, 42, 46, 0.12);
+}
+
+.recent-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.recent-card-header h2 {
+  margin-bottom: 0;
+}
+
+.chevron-icon {
+  width: 20px;
+  height: 20px;
+  color: var(--color-ink-plum);
+  opacity: 0.4;
+  transition: transform 0.2s ease;
+}
+
+.clickable-card:hover .chevron-icon {
+  transform: translateX(4px);
+  opacity: 0.8;
+}
+
+.entry-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  width: 100%;
+}
+
+.entry-date {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--color-ink-plum);
+  opacity: 0.7;
+}
+
+.entry-snippet {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 0;
+  color: var(--color-ink-plum);
+}
+
+.mood-pill {
+  background-color: var(--color-dusty-rose);
+  color: var(--color-ink-plum);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  text-transform: uppercase;
+}
+
+.status-indicator {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-sage-whisper);
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+.status-indicator.error {
+  color: #d32f2f;
+  opacity: 0.8;
+}
+
+.placeholder {
+  font-family: var(--font-body);
+  color: var(--color-ink-plum);
+  opacity: 0.6;
+  font-style: italic;
+  margin: 0;
+}
+
+.sparkline-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.sparkline-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  position: relative;
+}
+
+.sparkline-container svg {
+  margin-bottom: 0.5rem;
+  overflow: visible;
+}
+
+.chart-point-group {
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.chart-point-group:hover .point-dot {
+  transition: r 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.x-axis-label {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  fill: var(--color-ink-plum);
+  opacity: 0.6;
+}
+
+.chart-tooltip {
+  position: absolute;
+  top: -10px;
+  background-color: var(--color-ink-plum);
+  color: var(--color-cream-paper);
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  pointer-events: none;
+  box-shadow: 0 4px 12px rgba(59, 42, 46, 0.2);
+  z-index: 10;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+.chart-tooltip strong {
+  font-weight: 600;
+}
+
+.chart-tooltip span {
+  opacity: 0.8;
+  font-size: 0.75rem;
+}
+
+.insight-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-ink-plum);
+  opacity: 0.6;
+  margin: 0;
+  margin-top: 1rem;
+}

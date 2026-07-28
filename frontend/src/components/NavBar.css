@@ -1,0 +1,102 @@
+.nav-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 72px; /* Fixed height */
+  background-color: var(--color-cream-paper);
+  border-top: 1px solid rgba(59, 42, 46, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+  z-index: 100;
+  box-shadow: 0 -4px 12px rgba(59, 42, 46, 0.05);
+}
+
+.nav-brand {
+  display: none;
+}
+
+.nav-brand a {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--color-ink-plum);
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  justify-content: space-around;
+  gap: 0;
+  flex: 1;
+  padding-right: 1rem;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  text-decoration: none;
+  color: #8c8c8c; /* Muted gray */
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  transition: color 0.2s ease, background-color 0.2s ease;
+  border-radius: 12px; /* App general pill radius */
+  padding: 6px 16px;
+  background-color: transparent;
+}
+
+.nav-item svg {
+  width: 24px;
+  height: 24px;
+}
+
+.nav-item.active {
+  color: var(--color-coral-bloom);
+  background-color: color-mix(in srgb, var(--color-dusty-rose) 20%, transparent);
+}
+
+.nav-item:hover {
+  color: var(--color-coral-bloom);
+}
+
+.nav-record-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Desktop Breakpoint */
+@media (min-width: 768px) {
+  .nav-bar {
+    top: 0;
+    bottom: auto;
+    border-top: none;
+    border-bottom: 1px solid rgba(59, 42, 46, 0.1);
+    box-shadow: 0 4px 12px rgba(59, 42, 46, 0.05);
+    padding: 0 2rem;
+  }
+
+  .nav-brand {
+    display: block;
+  }
+
+  .nav-links {
+    flex: 0 1 auto;
+    justify-content: flex-end;
+    gap: 2rem;
+    padding-right: 2rem;
+  }
+
+  .nav-item {
+    font-size: 1rem;
+    flex-direction: row;
+  }
+
+  .nav-item svg {
+    display: none; /* Hide icons, show plain text */
+  }
+}

@@ -1,0 +1,88 @@
+.waveform-player {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 1rem;
+}
+
+.play-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: var(--color-coral-bloom);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+  color: var(--color-cream-paper);
+}
+
+.play-btn:hover:not(:disabled) {
+  transform: scale(1.05);
+  background-color: #f77050;
+}
+
+.play-btn:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.play-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.play-btn svg {
+  width: 20px;
+  height: 20px;
+  margin-left: 2px;
+}
+
+.play-btn[aria-label="Pause"] svg {
+  margin-left: 0;
+}
+
+.waveform-container {
+  flex: 1;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.w-bar {
+  width: 0.6%;
+  background-color: var(--color-ink-plum);
+  opacity: 0.2;
+  border-radius: 1px;
+}
+
+.w-bar.played {
+  background-color: var(--color-coral-bloom);
+  opacity: 1;
+}
+
+.w-bar.loading-bar {
+  transition: none;
+}
+
+.time-display {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--color-ink-plum);
+  opacity: 0.7;
+  white-space: nowrap;
+  min-width: 80px;
+  text-align: right;
+}
+
+.fallback-player {
+  width: 100%;
+  margin: 1rem 0;
+}
