@@ -56,7 +56,7 @@ export default function TimelineScreen() {
 
   return (
     <LinearGradient
-      colors={[colors.peachMist, colors.dustyRose]}
+      colors={[colors.obsidian, colors.obsidian]}
       style={styles.container}
     >
       <SafeAreaView style={styles.safeArea}>
@@ -80,8 +80,8 @@ export default function TimelineScreen() {
             <RefreshControl
               refreshing={refreshing}
               onRefresh={onRefresh}
-              tintColor={colors.inkPlum}
-              colors={[colors.inkPlum]}
+              tintColor={colors.paperWhite}
+              colors={[colors.paperWhite]}
             />
           }
         />
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
   heading: { 
     fontFamily: fonts.display, 
     fontSize: 36, 
-    color: colors.inkPlum 
+    color: colors.paperWhite 
   },
   listContent: {
     paddingHorizontal: 20,
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
   emptyText: {
     fontFamily: fonts.body,
     fontSize: 16,
-    color: colors.inkPlum,
+    color: colors.slateGray,
     opacity: 0.6,
     textAlign: 'center',
     lineHeight: 24,

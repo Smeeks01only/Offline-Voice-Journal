@@ -13,6 +13,8 @@ import { RecordingProvider, useRecording } from './src/context/RecordingContext'
 import RetryBanner from './src/components/RetryBanner';
 import { getStuckEntries, updateEntry, createReflection } from './src/db/entries';
 import { processEntry } from './src/services/gemini';
+import { LockProvider, useLock } from './src/context/LockContext';
+import LockScreen from './src/screens/LockScreen';
 
 function AppForegroundHandler() {
   const { processRecordingJob } = useRecording();
@@ -80,6 +82,32 @@ function AppForegroundHandler() {
   );
 }
 
+function AppContent() {
+  const { isLocked, isReady } = useLock();
+
+  if (!isReady) {
+    return (
+      <View style={styles.splashContainer}>
+        <Text style={styles.splashText}>Loading Voice Journal...</Text>
+      </View>
+    );
+  }
+
+  return (
+    <View style={{ flex: 1 }}>
+      <AppForegroundHandler />
+      <NavigationContainer>
+        <AppNavigator />
+      </NavigationContainer>
+      {isLocked && (
+        <View style={[StyleSheet.absoluteFill, { zIndex: 9999, elevation: 9999 }]}>
+          <LockScreen mode="unlock" />
+        </View>
+      )}
+    </View>
+  );
+}
+
 export default function App() {
   const [dbInitialized, setDbInitialized] = useState(false);
 
@@ -110,24 +138,23 @@ export default function App() {
   }
 
   return (
-    <RecordingProvider>
-      <AppForegroundHandler />
-      <NavigationContainer>
-        <AppNavigator />
-      </NavigationContainer>
-    </RecordingProvider>
+    <LockProvider>
+      <RecordingProvider>
+        <AppContent />
+      </RecordingProvider>
+    </LockProvider>
   );
 }
 
 const styles = StyleSheet.create({
   splashContainer: {
     flex: 1,
-    backgroundColor: colors.peachMist,
+    backgroundColor: colors.obsidian,
     alignItems: 'center',
     justifyContent: 'center',
   },
   splashText: {
     fontSize: 18,
-    color: colors.inkPlum,
+    color: colors.paperWhite,
   }
 });

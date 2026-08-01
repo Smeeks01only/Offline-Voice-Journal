@@ -1,10 +1,11 @@
 export const colors = {
-  peachMist: '#FFDCC6',
-  coralBloom: '#F4886E',
-  creamPaper: '#FFF7F1',
-  inkPlum: '#3B2A2E',
-  dustyRose: '#E8A0A0',
-  sageWhisper: '#8FAE8B'
+  obsidian: '#0E0E10',
+  charcoal: '#1A1A1D',
+  paperWhite: '#F5F3EF',
+  slateGray: '#9A9AA0',
+  hairline: 'rgba(255,255,255,0.08)',
+  pillBg: 'rgba(255,255,255,0.08)',
+  errorRed: '#D97C7C'
 };
 
 export const fonts = {

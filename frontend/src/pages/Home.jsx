@@ -44,7 +44,7 @@ function InsightChart({ entries }) {
           <polyline 
             points={polylinePoints} 
             fill="none" 
-            stroke="var(--color-coral-bloom)" 
+            stroke="var(--color-paper-white)" 
             strokeWidth="3" 
             strokeLinecap="round" 
             strokeLinejoin="round" 
@@ -61,7 +61,7 @@ function InsightChart({ entries }) {
                 cx={p.x} 
                 cy={p.y} 
                 r={hoveredIndex === i ? "4" : "2.5"} 
-                fill={hoveredIndex === i ? "var(--color-ink-plum)" : "var(--color-coral-bloom)"} 
+                fill={hoveredIndex === i ? "var(--color-paper-white)" : "var(--color-slate-gray)"} 
                 className="point-dot"
               />
               <text x={p.x} y="75" textAnchor="middle" className="x-axis-label">{p.shortDay}</text>

@@ -99,7 +99,7 @@ export default function EntryDetailScreen({ route }) {
   if (!entry) {
     return (
       <SafeAreaView style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color={colors.coralBloom} />
+        <ActivityIndicator size="large" color={colors.paperWhite} />
       </SafeAreaView>
     );
   }
@@ -130,7 +130,7 @@ export default function EntryDetailScreen({ route }) {
 
         {!isDone && !isError && (
           <View style={styles.statusContainer}>
-            <ActivityIndicator size="small" color={colors.sageWhisper} />
+            <ActivityIndicator size="small" color={colors.paperWhite} />
             <Text style={styles.statusText}>
               {entry.status === 'pending' ? 'Preparing audio...' : 'Transcribing and reflecting...'}
             </Text>
@@ -196,13 +196,13 @@ export default function EntryDetailScreen({ route }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: colors.obsidian,
   },
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: colors.obsidian,
   },
   header: {
     flexDirection: 'row',
@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 16,
     borderBottomWidth: 1,
-    borderBottomColor: '#f0f0f0',
+    borderBottomColor: colors.hairline,
   },
   backButton: {
     padding: 8,
@@ -223,12 +223,12 @@ const styles = StyleSheet.create({
   backButtonText: {
     fontFamily: fonts.body,
     fontSize: 16,
-    color: colors.inkPlum,
+    color: colors.slateGray,
   },
   dateText: {
     fontFamily: fonts.mono,
     fontSize: 12,
-    color: colors.sageWhisper,
+    color: colors.slateGray,
     textTransform: 'uppercase',
   },
   scrollContent: {
@@ -243,31 +243,33 @@ const styles = StyleSheet.create({
   statusText: {
     fontFamily: fonts.body,
     fontSize: 16,
-    color: colors.sageWhisper,
+    color: colors.slateGray,
     marginLeft: 12,
   },
   errorContainer: {
-    backgroundColor: '#FFF5F5',
+    backgroundColor: colors.charcoal,
     padding: 20,
     borderRadius: 16,
     marginTop: 10,
+    borderWidth: 1,
+    borderColor: colors.hairline,
   },
   errorTitle: {
     fontFamily: fonts.body,
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#D32F2F',
+    color: colors.errorRed,
     marginBottom: 8,
   },
   errorText: {
     fontFamily: fonts.body,
     fontSize: 15,
-    color: '#D32F2F',
+    color: colors.errorRed,
     opacity: 0.8,
     marginBottom: 16,
   },
   retryButton: {
-    backgroundColor: '#D32F2F',
+    backgroundColor: colors.errorRed,
     paddingVertical: 12,
     paddingHorizontal: 20,
     borderRadius: 8,
@@ -280,7 +282,7 @@ const styles = StyleSheet.create({
   retryButtonText: {
     fontFamily: fonts.body,
     fontSize: 14,
-    color: '#fff',
+    color: colors.paperWhite,
     fontWeight: 'bold',
   },
   doneContainer: {
@@ -289,14 +291,16 @@ const styles = StyleSheet.create({
   transcript: {
     fontFamily: fonts.body,
     fontSize: 18,
-    color: colors.inkPlum,
+    color: colors.paperWhite,
     lineHeight: 28,
     marginBottom: 32,
   },
   reflectionCard: {
-    backgroundColor: colors.creamPaper,
+    backgroundColor: colors.charcoal,
     borderRadius: 20,
     padding: 24,
+    borderWidth: 1,
+    borderColor: colors.hairline,
   },
   pillContainer: {
     flexDirection: 'row',
@@ -304,7 +308,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   moodPill: {
-    backgroundColor: colors.dustyRose,
+    backgroundColor: colors.pillBg,
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 16,
@@ -314,47 +318,47 @@ const styles = StyleSheet.create({
   moodText: {
     fontFamily: fonts.mono,
     fontSize: 12,
-    color: colors.inkPlum,
+    color: colors.paperWhite,
     fontWeight: 'bold',
   },
   themePill: {
-    backgroundColor: 'rgba(74, 93, 78, 0.1)', // sageWhisper very light
+    backgroundColor: colors.pillBg,
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 16,
     marginRight: 8,
     marginBottom: 8,
     borderWidth: 1,
-    borderColor: 'rgba(74, 93, 78, 0.2)',
+    borderColor: colors.hairline,
   },
   themeText: {
     fontFamily: fonts.mono,
     fontSize: 12,
-    color: colors.sageWhisper,
+    color: colors.paperWhite,
   },
   summaryTitle: {
     fontFamily: fonts.display,
     fontSize: 20,
-    color: colors.inkPlum,
+    color: colors.paperWhite,
     marginBottom: 8,
   },
   summaryText: {
     fontFamily: fonts.body,
     fontSize: 16,
-    color: colors.inkPlum,
+    color: colors.paperWhite,
     opacity: 0.8,
     lineHeight: 24,
     marginBottom: 24,
   },
   questionContainer: {
     borderLeftWidth: 3,
-    borderLeftColor: colors.coralBloom,
+    borderLeftColor: colors.paperWhite,
     paddingLeft: 16,
   },
   questionText: {
     fontFamily: fonts.display,
     fontSize: 22,
-    color: colors.inkPlum,
+    color: colors.paperWhite,
     fontStyle: 'italic',
     lineHeight: 30,
   }

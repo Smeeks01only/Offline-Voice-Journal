@@ -40,7 +40,7 @@ export default function SearchScreen() {
 
   return (
     <LinearGradient
-      colors={[colors.peachMist, colors.dustyRose]}
+      colors={[colors.obsidian, colors.obsidian]}
       style={styles.container}
     >
       <SafeAreaView style={styles.safeArea}>
@@ -50,7 +50,7 @@ export default function SearchScreen() {
             <TextInput
               style={styles.searchInput}
               placeholder="Find a memory or topic..."
-              placeholderTextColor={colors.sageWhisper}
+              placeholderTextColor={colors.slateGray}
               value={query}
               onChangeText={(text) => {
                 setQuery(text);
@@ -103,27 +103,24 @@ const styles = StyleSheet.create({
   heading: { 
     fontFamily: fonts.display, 
     fontSize: 36, 
-    color: colors.inkPlum,
+    color: colors.paperWhite,
     marginBottom: 16
   },
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: colors.charcoal,
     borderRadius: 16,
     paddingHorizontal: 16,
     height: 52,
-    elevation: 2,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 4,
+    borderWidth: 1,
+    borderColor: colors.hairline,
   },
   searchInput: {
     flex: 1,
     fontFamily: fonts.body,
     fontSize: 16,
-    color: colors.inkPlum,
+    color: colors.paperWhite,
     height: '100%',
   },
   clearButton: {
@@ -134,7 +131,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   clearButtonText: {
-    color: colors.sageWhisper,
+    color: colors.slateGray,
     fontSize: 16,
   },
   listContent: {
@@ -152,7 +149,7 @@ const styles = StyleSheet.create({
   emptyText: {
     fontFamily: fonts.body,
     fontSize: 16,
-    color: colors.inkPlum,
+    color: colors.slateGray,
     opacity: 0.6,
     textAlign: 'center',
     lineHeight: 24,

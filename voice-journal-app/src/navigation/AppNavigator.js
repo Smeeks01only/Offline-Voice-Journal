@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import JournalScreen from '../screens/JournalScreen';
 import TimelineScreen from '../screens/TimelineScreen';
 import SearchScreen from '../screens/SearchScreen';
+import ProfileScreen from '../screens/ProfileScreen';
 import EntryDetailScreen from '../screens/EntryDetailScreen';
 import { colors, fonts } from '../theme/tokens';
 import { Feather } from '@expo/vector-icons';
@@ -17,11 +18,12 @@ function TabNavigator() {
       screenOptions={({ route }) => ({
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: colors.inkPlum,
-          borderTopWidth: 0,
+          backgroundColor: colors.charcoal,
+          borderTopWidth: 1,
+          borderTopColor: colors.hairline,
         },
-        tabBarActiveTintColor: colors.coralBloom,
-        tabBarInactiveTintColor: colors.sageWhisper,
+        tabBarActiveTintColor: colors.paperWhite,
+        tabBarInactiveTintColor: colors.slateGray,
         tabBarLabelStyle: {
           fontFamily: fonts.body,
         },
@@ -33,6 +35,8 @@ function TabNavigator() {
             iconName = 'clock';
           } else if (route.name === 'Search') {
             iconName = 'search';
+          } else if (route.name === 'Profile') {
+            iconName = 'user';
           }
           return <Feather name={iconName} size={size} color={color} />;
         }
@@ -41,6 +45,7 @@ function TabNavigator() {
       <Tab.Screen name="Journal" component={JournalScreen} />
       <Tab.Screen name="Timeline" component={TimelineScreen} />
       <Tab.Screen name="Search" component={SearchScreen} />
+      <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
   );
 }

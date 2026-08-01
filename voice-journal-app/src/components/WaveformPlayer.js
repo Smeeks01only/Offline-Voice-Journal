@@ -134,7 +134,7 @@ export default function WaveformPlayer({ audioUri, waveformSamples = [], duratio
                   styles.bar, 
                   { 
                     height: Math.max(4, scale * 40),
-                    backgroundColor: isPlayed ? colors.coralBloom : colors.sageWhisper,
+                    backgroundColor: isPlayed ? colors.paperWhite : colors.slateGray,
                     opacity: isPlayed ? 1 : 0.4
                   }
                 ]} 
@@ -156,21 +156,18 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: colors.creamPaper,
+    backgroundColor: colors.charcoal,
     borderRadius: 20,
     padding: 16,
-    elevation: 2,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 4,
+    borderWidth: 1,
+    borderColor: colors.hairline,
     marginBottom: 24,
   },
   playButton: {
     width: 48,
     height: 48,
     borderRadius: 24,
-    backgroundColor: colors.coralBloom,
+    backgroundColor: colors.paperWhite,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 16,
@@ -183,7 +180,7 @@ const styles = StyleSheet.create({
     borderLeftWidth: 12,
     borderTopColor: 'transparent',
     borderBottomColor: 'transparent',
-    borderLeftColor: '#fff',
+    borderLeftColor: colors.charcoal,
     marginLeft: 4,
   },
   pauseIcon: {
@@ -191,7 +188,7 @@ const styles = StyleSheet.create({
     height: 16,
     borderLeftWidth: 4,
     borderRightWidth: 4,
-    borderColor: '#fff',
+    borderColor: colors.charcoal,
   },
   waveformWrapper: {
     flex: 1,
@@ -214,6 +211,6 @@ const styles = StyleSheet.create({
   timeText: {
     fontFamily: fonts.mono,
     fontSize: 10,
-    color: colors.sageWhisper,
+    color: colors.slateGray,
   }
 });

@@ -1,10 +1,10 @@
 .entry-card {
-  background-color: var(--color-cream-paper);
+  background-color: var(--color-charcoal);
   border-radius: 20px;
   padding: 1.5rem;
-  box-shadow: 0 4px 12px rgba(59, 42, 46, 0.05);
+  border: 1px solid var(--color-hairline);
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.2s ease;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
@@ -14,7 +14,6 @@
 
 .entry-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 32px rgba(59, 42, 46, 0.12);
 }
 
 .entry-status-group {
@@ -26,7 +25,7 @@
 .chevron-icon {
   width: 20px;
   height: 20px;
-  color: var(--color-ink-plum);
+  color: var(--color-slate-gray);
   opacity: 0.4;
   transition: transform 0.2s ease;
   flex-shrink: 0;
@@ -47,7 +46,7 @@
 .entry-date {
   font-family: var(--font-mono);
   font-size: 0.8rem;
-  color: var(--color-ink-plum);
+  color: var(--color-slate-gray);
   opacity: 0.7;
 }
 
@@ -55,7 +54,7 @@
   font-family: var(--font-body);
   font-size: 1rem;
   line-height: 1.5;
-  color: var(--color-ink-plum);
+  color: var(--color-paper-white);
   margin: 0;
 }
 
@@ -65,8 +64,8 @@
 }
 
 .mood-pill {
-  background-color: var(--color-dusty-rose);
-  color: var(--color-ink-plum);
+  background-color: var(--color-pill-bg);
+  color: var(--color-paper-white);
   font-family: var(--font-mono);
   font-size: 0.75rem;
   font-weight: 600;
@@ -79,12 +78,11 @@
 .status-indicator {
   font-family: var(--font-mono);
   font-size: 0.75rem;
-  color: var(--color-sage-whisper);
+  color: var(--color-slate-gray);
   white-space: nowrap;
   font-weight: 500;
 }
 
 .status-indicator.error {
-  color: #d32f2f; /* muted red */
-  opacity: 0.8;
+  color: var(--color-error-red);
 }

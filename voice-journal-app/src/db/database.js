@@ -35,5 +35,10 @@ export const initDatabase = async () => {
       model_version TEXT,
       created_at TEXT
     );
+
+    CREATE TABLE IF NOT EXISTS settings (
+      key TEXT PRIMARY KEY,
+      value TEXT
+    );
   `);
 };

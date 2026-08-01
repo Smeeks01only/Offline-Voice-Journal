@@ -11,7 +11,7 @@
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background-color: var(--color-coral-bloom);
+  background-color: var(--color-paper-white);
   border: none;
   cursor: pointer;
   display: flex;
@@ -19,12 +19,12 @@
   justify-content: center;
   flex-shrink: 0;
   transition: transform 0.2s ease, background-color 0.2s ease;
-  color: var(--color-cream-paper);
+  color: var(--color-charcoal);
 }
 
 .play-btn:hover:not(:disabled) {
   transform: scale(1.05);
-  background-color: #f77050;
+  background-color: #E0E0E0;
 }
 
 .play-btn:active:not(:disabled) {
@@ -58,13 +58,13 @@
 
 .w-bar {
   width: 0.6%;
-  background-color: var(--color-ink-plum);
-  opacity: 0.2;
+  background-color: var(--color-slate-gray);
+  opacity: 0.4;
   border-radius: 1px;
 }
 
 .w-bar.played {
-  background-color: var(--color-coral-bloom);
+  background-color: var(--color-paper-white);
   opacity: 1;
 }
 
@@ -75,7 +75,7 @@
 .time-display {
   font-family: var(--font-mono);
   font-size: 0.8rem;
-  color: var(--color-ink-plum);
+  color: var(--color-slate-gray);
   opacity: 0.7;
   white-space: nowrap;
   min-width: 80px;

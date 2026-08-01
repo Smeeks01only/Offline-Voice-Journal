@@ -52,12 +52,12 @@ const InsightSparkline = ({ entries }) => {
   return (
     <View style={styles.chartContainer}>
       <Svg width={width} height={height}>
-        <Line x1={0} y1={height - paddingY} x2={width} y2={height - paddingY} stroke={colors.sageWhisper} strokeWidth="1" strokeOpacity={0.3} />
-        <Polyline points={points} fill="none" stroke={colors.coralBloom} strokeWidth="3" />
+        <Line x1={0} y1={height - paddingY} x2={width} y2={height - paddingY} stroke={colors.slateGray} strokeWidth="1" strokeOpacity={0.3} />
+        <Polyline points={points} fill="none" stroke={colors.paperWhite} strokeWidth="3" />
         {days.map((d, i) => {
           const pt = getPoint(i, d.count);
           return (
-            <Circle key={i} cx={pt.x} cy={pt.y} r="4" fill={colors.coralBloom} />
+            <Circle key={i} cx={pt.x} cy={pt.y} r="4" fill={colors.paperWhite} />
           );
         })}
       </Svg>
@@ -107,7 +107,7 @@ export default function JournalScreen() {
 
   return (
     <LinearGradient
-      colors={[colors.peachMist, colors.dustyRose]}
+      colors={[colors.obsidian, colors.obsidian]}
       style={styles.container}
     >
       <SafeAreaView style={styles.safeArea}>
@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
   heading: { 
     fontFamily: fonts.display, 
     fontSize: 36, 
-    color: colors.inkPlum, 
+    color: colors.paperWhite, 
     marginBottom: 24 
   },
   ctaCard: {
@@ -204,20 +204,17 @@ const styles = StyleSheet.create({
   ctaLabel: {
     fontFamily: fonts.body,
     fontSize: 16,
-    color: colors.inkPlum,
+    color: colors.slateGray,
     opacity: 0.8,
     marginTop: -10,
   },
   card: {
-    backgroundColor: colors.creamPaper,
+    backgroundColor: colors.charcoal,
     borderRadius: 20,
     padding: 20,
     marginBottom: 24,
-    elevation: 3,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
+    borderWidth: 1,
+    borderColor: colors.hairline,
   },
   placeholderCard: {
     alignItems: 'center',
@@ -227,7 +224,7 @@ const styles = StyleSheet.create({
   placeholderText: {
     fontFamily: fonts.body,
     fontSize: 15,
-    color: colors.inkPlum,
+    color: colors.slateGray,
     opacity: 0.6,
     textAlign: 'center',
   },
@@ -240,44 +237,44 @@ const styles = StyleSheet.create({
   cardDate: {
     fontFamily: fonts.mono,
     fontSize: 12,
-    color: colors.sageWhisper,
+    color: colors.slateGray,
     textTransform: 'uppercase',
   },
   cardTitle: {
     fontFamily: fonts.body,
     fontWeight: 'bold',
     fontSize: 14,
-    color: colors.sageWhisper,
+    color: colors.slateGray,
     textTransform: 'uppercase',
   },
   chevron: {
     fontFamily: fonts.body,
     fontSize: 20,
-    color: colors.inkPlum,
+    color: colors.slateGray,
     opacity: 0.3,
   },
   snippet: {
     fontFamily: fonts.body,
     fontSize: 16,
-    color: colors.inkPlum,
+    color: colors.paperWhite,
     lineHeight: 24,
   },
   errorSnippet: {
     fontFamily: fonts.body,
     fontSize: 16,
-    color: colors.inkPlum,
+    color: colors.errorRed,
     opacity: 0.5,
     fontStyle: 'italic',
   },
   pendingSnippet: {
     fontFamily: fonts.body,
     fontSize: 16,
-    color: colors.coralBloom,
+    color: colors.slateGray,
     fontWeight: 'bold',
     fontStyle: 'italic',
   },
   moodPill: {
-    backgroundColor: colors.dustyRose,
+    backgroundColor: colors.pillBg,
     alignSelf: 'flex-start',
     paddingHorizontal: 12,
     paddingVertical: 4,
@@ -287,7 +284,7 @@ const styles = StyleSheet.create({
   moodText: {
     fontFamily: fonts.mono,
     fontSize: 12,
-    color: colors.inkPlum,
+    color: colors.paperWhite,
     fontWeight: 'bold',
   },
   sectionHeaderContainer: {
@@ -297,7 +294,7 @@ const styles = StyleSheet.create({
   sectionHeader: {
     fontFamily: fonts.display,
     fontSize: 24,
-    color: colors.inkPlum,
+    color: colors.paperWhite,
   },
   chartContainer: {
     alignItems: 'center',
@@ -315,7 +312,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     fontFamily: fonts.mono,
     fontSize: 10,
-    color: colors.sageWhisper,
+    color: colors.slateGray,
     width: 20,
     textAlign: 'center',
   }

@@ -42,15 +42,12 @@ export default function EntryCard({ entry, onPress }) {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: colors.creamPaper,
+    backgroundColor: colors.charcoal,
     borderRadius: 20,
     padding: 20,
     marginBottom: 20,
-    elevation: 3,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
+    borderWidth: 1,
+    borderColor: colors.hairline,
   },
   cardHeader: {
     marginBottom: 12,
@@ -58,31 +55,31 @@ const styles = StyleSheet.create({
   cardDate: {
     fontFamily: fonts.mono,
     fontSize: 12,
-    color: colors.sageWhisper,
+    color: colors.slateGray,
     textTransform: 'uppercase',
   },
   snippet: {
     fontFamily: fonts.body,
     fontSize: 16,
-    color: colors.inkPlum,
+    color: colors.paperWhite,
     lineHeight: 24,
   },
   errorSnippet: {
     fontFamily: fonts.body,
     fontSize: 16,
-    color: colors.inkPlum,
+    color: colors.errorRed,
     opacity: 0.5,
     fontStyle: 'italic',
   },
   pendingSnippet: {
     fontFamily: fonts.body,
     fontSize: 16,
-    color: colors.sageWhisper,
+    color: colors.slateGray,
     fontWeight: 'bold',
     fontStyle: 'italic',
   },
   moodPill: {
-    backgroundColor: colors.dustyRose,
+    backgroundColor: colors.pillBg,
     alignSelf: 'flex-start',
     paddingHorizontal: 12,
     paddingVertical: 4,
@@ -92,7 +89,7 @@ const styles = StyleSheet.create({
   moodText: {
     fontFamily: fonts.mono,
     fontSize: 12,
-    color: colors.inkPlum,
+    color: colors.paperWhite,
     fontWeight: 'bold',
   }
 });

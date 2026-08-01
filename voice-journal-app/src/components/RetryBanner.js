@@ -49,14 +49,11 @@ const styles = StyleSheet.create({
     top: 50, // Below status bar safely
     left: 16,
     right: 16,
-    backgroundColor: colors.inkPlum,
+    backgroundColor: colors.charcoal,
     borderRadius: 12,
+    borderWidth: 1,
+    borderColor: colors.hairline,
     zIndex: 1000,
-    elevation: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 8,
   },
   content: {
     flexDirection: 'row',
@@ -70,7 +67,7 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
   button: {
-    backgroundColor: colors.coralBloom,
+    backgroundColor: colors.paperWhite,
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 8,
@@ -84,7 +81,7 @@ const styles = StyleSheet.create({
     fontFamily: fonts.body,
     fontWeight: 'bold',
     fontSize: 14,
-    color: colors.inkPlum,
+    color: colors.charcoal,
   },
   closeButton: {
     padding: 8,
@@ -95,7 +92,7 @@ const styles = StyleSheet.create({
     marginRight: -8,
   },
   closeButtonText: {
-    color: colors.sageWhisper,
+    color: colors.slateGray,
     fontSize: 18,
   }
 });

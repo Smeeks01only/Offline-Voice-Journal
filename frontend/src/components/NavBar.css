@@ -4,14 +4,13 @@
   left: 0;
   right: 0;
   height: 72px; /* Fixed height */
-  background-color: var(--color-cream-paper);
-  border-top: 1px solid rgba(59, 42, 46, 0.1);
+  background-color: var(--color-charcoal);
+  border-top: 1px solid var(--color-hairline);
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 1rem;
   z-index: 100;
-  box-shadow: 0 -4px 12px rgba(59, 42, 46, 0.05);
 }
 
 .nav-brand {
@@ -21,7 +20,7 @@
 .nav-brand a {
   font-family: var(--font-display);
   font-size: 1.5rem;
-  color: var(--color-ink-plum);
+  color: var(--color-paper-white);
   text-decoration: none;
 }
 
@@ -40,7 +39,7 @@
   justify-content: center;
   gap: 4px;
   text-decoration: none;
-  color: #8c8c8c; /* Muted gray */
+  color: var(--color-slate-gray);
   font-family: var(--font-body);
   font-size: 0.75rem;
   transition: color 0.2s ease, background-color 0.2s ease;
@@ -55,12 +54,12 @@
 }
 
 .nav-item.active {
-  color: var(--color-coral-bloom);
-  background-color: color-mix(in srgb, var(--color-dusty-rose) 20%, transparent);
+  color: var(--color-paper-white);
+  background-color: var(--color-pill-bg);
 }
 
 .nav-item:hover {
-  color: var(--color-coral-bloom);
+  color: var(--color-paper-white);
 }
 
 .nav-record-wrapper {
@@ -75,8 +74,7 @@
     top: 0;
     bottom: auto;
     border-top: none;
-    border-bottom: 1px solid rgba(59, 42, 46, 0.1);
-    box-shadow: 0 4px 12px rgba(59, 42, 46, 0.05);
+    border-bottom: 1px solid var(--color-hairline);
     padding: 0 2rem;
   }
 

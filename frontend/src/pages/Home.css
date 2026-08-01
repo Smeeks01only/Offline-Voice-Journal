@@ -7,7 +7,7 @@
 .home-header h1 {
   font-family: var(--font-display);
   font-size: 2.5rem;
-  color: var(--color-ink-plum);
+  color: var(--color-paper-white);
   margin-bottom: 2rem;
   text-align: left;
 }
@@ -27,7 +27,7 @@
 .card {
   border-radius: 20px;
   padding: 1.5rem;
-  box-shadow: 0 8px 24px rgba(59, 42, 46, 0.08);
+  border: 1px solid var(--color-hairline);
 }
 
 .card h2 {
@@ -35,11 +35,11 @@
   font-size: 1.25rem;
   margin-top: 0;
   margin-bottom: 1rem;
-  color: var(--color-ink-plum);
+  color: var(--color-paper-white);
 }
 
 .cta-card {
-  background-color: var(--color-coral-bloom);
+  background-color: var(--color-charcoal);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -49,7 +49,7 @@
 }
 
 .cta-label {
-  color: var(--color-cream-paper);
+  color: var(--color-slate-gray);
   font-family: var(--font-body);
   font-weight: 500;
   margin-top: 1.5rem;
@@ -59,7 +59,7 @@
 }
 
 .recent-card, .insight-card {
-  background-color: var(--color-cream-paper);
+  background-color: var(--color-charcoal);
 }
 
 .recent-entry-content {
@@ -79,7 +79,6 @@
 
 .clickable-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 32px rgba(59, 42, 46, 0.12);
 }
 
 .recent-card-header {
@@ -96,7 +95,7 @@
 .chevron-icon {
   width: 20px;
   height: 20px;
-  color: var(--color-ink-plum);
+  color: var(--color-slate-gray);
   opacity: 0.4;
   transition: transform 0.2s ease;
 }
@@ -117,7 +116,7 @@
 .entry-date {
   font-family: var(--font-mono);
   font-size: 0.8rem;
-  color: var(--color-ink-plum);
+  color: var(--color-slate-gray);
   opacity: 0.7;
 }
 
@@ -126,12 +125,12 @@
   font-size: 1rem;
   line-height: 1.5;
   margin: 0;
-  color: var(--color-ink-plum);
+  color: var(--color-paper-white);
 }
 
 .mood-pill {
-  background-color: var(--color-dusty-rose);
-  color: var(--color-ink-plum);
+  background-color: var(--color-pill-bg);
+  color: var(--color-paper-white);
   font-family: var(--font-mono);
   font-size: 0.75rem;
   font-weight: 600;
@@ -143,19 +142,19 @@
 .status-indicator {
   font-family: var(--font-mono);
   font-size: 0.75rem;
-  color: var(--color-sage-whisper);
+  color: var(--color-slate-gray);
   white-space: nowrap;
   font-weight: 500;
 }
 
 .status-indicator.error {
-  color: #d32f2f;
+  color: var(--color-error-red);
   opacity: 0.8;
 }
 
 .placeholder {
   font-family: var(--font-body);
-  color: var(--color-ink-plum);
+  color: var(--color-slate-gray);
   opacity: 0.6;
   font-style: italic;
   margin: 0;
@@ -193,15 +192,16 @@
 .x-axis-label {
   font-family: var(--font-mono);
   font-size: 8px;
-  fill: var(--color-ink-plum);
+  fill: var(--color-slate-gray);
   opacity: 0.6;
 }
 
 .chart-tooltip {
   position: absolute;
   top: -10px;
-  background-color: var(--color-ink-plum);
-  color: var(--color-cream-paper);
+  background-color: var(--color-charcoal);
+  color: var(--color-paper-white);
+  border: 1px solid var(--color-hairline);
   padding: 0.5rem 0.75rem;
   border-radius: 8px;
   font-family: var(--font-body);
@@ -211,7 +211,6 @@
   align-items: center;
   gap: 2px;
   pointer-events: none;
-  box-shadow: 0 4px 12px rgba(59, 42, 46, 0.2);
   z-index: 10;
   transform: translateX(-50%);
   white-space: nowrap;
@@ -229,7 +228,7 @@
 .insight-label {
   font-family: var(--font-mono);
   font-size: 0.75rem;
-  color: var(--color-ink-plum);
+  color: var(--color-slate-gray);
   opacity: 0.6;
   margin: 0;
   margin-top: 1rem;

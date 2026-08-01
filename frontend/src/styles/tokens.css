@@ -1,10 +1,11 @@
 :root {
-  --color-peach-mist: #FFDCC6;
-  --color-coral-bloom: #F4886E;
-  --color-cream-paper: #FFF7F1;
-  --color-ink-plum: #3B2A2E;
-  --color-dusty-rose: #E8A0A0;
-  --color-sage-whisper: #8FAE8B;
+  --color-obsidian: #0E0E10;
+  --color-charcoal: #1A1A1D;
+  --color-paper-white: #F5F3EF;
+  --color-slate-gray: #9A9AA0;
+  --color-hairline: rgba(255,255,255,0.08);
+  --color-pill-bg: rgba(255,255,255,0.08);
+  --color-error-red: #D97C7C;
   --font-display: 'Fraunces', serif;
   --font-body: 'Inter', sans-serif;
   --font-mono: 'IBM Plex Mono', monospace;
@@ -15,9 +16,8 @@ body {
   padding: 0;
   min-height: 100vh;
   font-family: var(--font-body);
-  color: var(--color-ink-plum);
-  background: linear-gradient(135deg, var(--color-peach-mist) 0%, var(--color-dusty-rose) 100%);
-  background-attachment: fixed;
+  color: var(--color-paper-white);
+  background: var(--color-obsidian);
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -34,7 +34,7 @@ code, pre {
 }
 
 *:focus-visible {
-  outline: 3px solid var(--color-coral-bloom);
+  outline: 3px solid var(--color-paper-white);
   outline-offset: 3px;
 }
 

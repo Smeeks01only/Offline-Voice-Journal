@@ -1,4 +1,5 @@
 import { openDatabase } from './database';
+import * as FileSystem from 'expo-file-system/legacy';
 
 export const createEntry = async (entry) => {
   const db = await openDatabase();
@@ -105,4 +106,88 @@ export const getStuckEntries = async () => {
     ...row,
     waveform_samples: row.waveform_samples ? JSON.parse(row.waveform_samples) : null
   }));
+};
+
+export const clearAllData = async () => {
+  const db = await openDatabase();
+  await db.execAsync(`
+    DELETE FROM reflections;
+    DELETE FROM entries;
+    DELETE FROM settings;
+  `);
+
+  const files = await FileSystem.readDirectoryAsync(FileSystem.documentDirectory);
+  for (const file of files) {
+    if (file.endsWith('.m4a')) {
+      await FileSystem.deleteAsync(FileSystem.documentDirectory + file, { idempotent: true });
+    }
+  }
+};
+
+export const getSetting = async (key) => {
+  const db = await openDatabase();
+  const row = await db.getFirstAsync('SELECT value FROM settings WHERE key = ?', [key]);
+  return row ? row.value : null;
+};
+
+export const setSetting = async (key, value) => {
+  const db = await openDatabase();
+  await db.runAsync(
+    'INSERT INTO settings (key, value) VALUES (?, ?) ON CONFLICT(key) DO UPDATE SET value = ?',
+    [key, value, value]
+  );
+};
+
+export const getStats = async () => {
+  const db = await openDatabase();
+  
+  const totalRow = await db.getFirstAsync("SELECT COUNT(*) as count FROM entries WHERE status = 'done'");
+  const totalEntries = totalRow.count;
+
+  const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
+  const weekRow = await db.getFirstAsync("SELECT COUNT(*) as count FROM entries WHERE status = 'done' AND created_at >= ?", [sevenDaysAgo]);
+  const entriesThisWeek = weekRow.count;
+
+  const rows = await db.getAllAsync("SELECT created_at FROM entries WHERE status = 'done' ORDER BY created_at DESC");
+  let streak = 0;
+  if (rows.length > 0) {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    const mostRecentDate = new Date(rows[0].created_at);
+    mostRecentDate.setHours(0, 0, 0, 0);
+    
+    const diffTime = Math.abs(today - mostRecentDate);
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    
+    if (diffDays <= 1) {
+      let uniqueDates = new Set();
+      for (const row of rows) {
+        const d = new Date(row.created_at);
+        d.setHours(0, 0, 0, 0);
+        uniqueDates.add(d.getTime());
+      }
+      
+      const uniqueDatesArr = Array.from(uniqueDates).sort((a, b) => b - a);
+      
+      streak = 1;
+      let currentCheck = uniqueDatesArr[0];
+      for (let i = 1; i < uniqueDatesArr.length; i++) {
+        const nextCheck = uniqueDatesArr[i];
+        const dayDiff = Math.floor((currentCheck - nextCheck) / (1000 * 60 * 60 * 24));
+        if (dayDiff === 1) {
+          streak++;
+          currentCheck = nextCheck;
+        } else {
+          break;
+        }
+      }
+    }
+  }
+
+  return {
+    totalEntries,
+    entriesThisWeek,
+    currentStreak: streak
+  };
 };
