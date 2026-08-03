@@ -11,10 +11,12 @@ import { initDatabase } from './src/db/database';
 import { colors } from './src/theme/tokens';
 import { RecordingProvider, useRecording } from './src/context/RecordingContext';
 import RetryBanner from './src/components/RetryBanner';
-import { getStuckEntries, updateEntry, createReflection } from './src/db/entries';
+import { getStuckEntries, updateEntry, createReflection, getSetting, setSetting } from './src/db/entries';
 import { processEntry } from './src/services/gemini';
 import { LockProvider, useLock } from './src/context/LockContext';
 import LockScreen from './src/screens/LockScreen';
+import DataDisclosureScreen from './src/screens/DataDisclosureScreen';
+import ErrorBoundary from './src/components/ErrorBoundary';
 
 function AppForegroundHandler() {
   const { processRecordingJob } = useRecording();
@@ -110,6 +112,7 @@ function AppContent() {
 
 export default function App() {
   const [dbInitialized, setDbInitialized] = useState(false);
+  const [isDisclosurePending, setIsDisclosurePending] = useState(true);
 
   const [fontsLoaded] = useFonts({
     Fraunces_600SemiBold,
@@ -122,12 +125,26 @@ export default function App() {
       try {
         await initDatabase();
         setDbInitialized(true);
+        const ack = await getSetting('dataDisclosureAcknowledged');
+        if (ack) {
+          setIsDisclosurePending(false);
+        }
       } catch (e) {
         console.error("Database initialization failed:", e);
       }
     };
     setup();
   }, []);
+
+  const handleAcknowledge = async () => {
+    try {
+      await setSetting('dataDisclosureAcknowledged', new Date().toISOString());
+      setIsDisclosurePending(false);
+    } catch (e) {
+      console.error(e);
+      setIsDisclosurePending(false);
+    }
+  };
 
   if (!fontsLoaded || !dbInitialized) {
     return (
@@ -137,12 +154,18 @@ export default function App() {
     );
   }
 
+  if (isDisclosurePending) {
+    return <DataDisclosureScreen onAcknowledge={handleAcknowledge} />;
+  }
+
   return (
-    <LockProvider>
-      <RecordingProvider>
-        <AppContent />
-      </RecordingProvider>
-    </LockProvider>
+    <ErrorBoundary>
+      <LockProvider>
+        <RecordingProvider>
+          <AppContent />
+        </RecordingProvider>
+      </LockProvider>
+    </ErrorBoundary>
   );
 }
 

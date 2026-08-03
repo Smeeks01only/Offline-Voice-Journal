@@ -6,6 +6,7 @@ import TimelineScreen from '../screens/TimelineScreen';
 import SearchScreen from '../screens/SearchScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import EntryDetailScreen from '../screens/EntryDetailScreen';
+import PrivacyPolicyScreen from '../screens/PrivacyPolicyScreen';
 import { colors, fonts } from '../theme/tokens';
 import { Feather } from '@expo/vector-icons';
 
@@ -55,6 +56,7 @@ export default function AppNavigator() {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Tabs" component={TabNavigator} />
       <Stack.Screen name="EntryDetail" component={EntryDetailScreen} />
+      <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicyScreen} />
     </Stack.Navigator>
   );
 }

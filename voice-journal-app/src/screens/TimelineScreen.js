@@ -1,10 +1,10 @@
 import React, { useState, useCallback } from 'react';
-import { View, Text, StyleSheet, FlatList, Pressable, RefreshControl } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Pressable, RefreshControl, Alert } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { colors, fonts } from '../theme/tokens';
-import { getAllEntries } from '../db/entries';
+import { getAllEntries, deleteEntry } from '../db/entries';
 import { getRelativeTime } from '../utils/dateUtils';
 import EntryCard from '../components/EntryCard';
 
@@ -48,6 +48,24 @@ export default function TimelineScreen() {
     setRefreshing(false);
   }, []);
 
+  const promptDelete = (id, audioUri) => {
+    Alert.alert(
+      "Delete this entry?",
+      "This can't be undone.",
+      [
+        { text: "Cancel", style: "cancel" },
+        { 
+          text: "Delete", 
+          style: "destructive",
+          onPress: async () => {
+            await deleteEntry(id, audioUri);
+            fetchEntries();
+          }
+        }
+      ]
+    );
+  };
+
   const renderEmpty = () => (
     <View style={styles.emptyContainer}>
       <Text style={styles.emptyText}>Nothing here yet — your recorded entries will show up on this timeline.</Text>
@@ -71,6 +89,7 @@ export default function TimelineScreen() {
             <EntryCard 
               entry={item} 
               onPress={() => navigation.navigate('EntryDetail', { entryId: item.id })} 
+              onLongPress={() => promptDelete(item.id, item.audio_uri)}
             />
           )}
           contentContainerStyle={styles.listContent}

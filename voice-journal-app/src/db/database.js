@@ -23,7 +23,8 @@ export const initDatabase = async () => {
       duration_sec REAL,
       status TEXT,
       error_message TEXT,
-      waveform_samples TEXT
+      waveform_samples TEXT,
+      edited INTEGER DEFAULT 0
     );
 
     CREATE TABLE IF NOT EXISTS reflections (
@@ -41,4 +42,10 @@ export const initDatabase = async () => {
       value TEXT
     );
   `);
+
+  try {
+    await database.execAsync(`ALTER TABLE entries ADD COLUMN edited INTEGER DEFAULT 0;`);
+  } catch (e) {
+    // Column likely already exists, ignore
+  }
 };

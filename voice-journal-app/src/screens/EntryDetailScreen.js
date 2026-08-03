@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, ActivityIndicator, TextInput, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { colors, fonts } from '../theme/tokens';
-import { getEntry, getReflection, updateEntry, createReflection } from '../db/entries';
-import { processEntry } from '../services/gemini';
+import { getEntry, getReflection, updateEntry, createReflection, updateReflection, deleteEntry } from '../db/entries';
+import { processEntry, processTextEntry } from '../services/gemini';
 import WaveformPlayer from '../components/WaveformPlayer';
 
 export default function EntryDetailScreen({ route }) {
@@ -14,6 +14,10 @@ export default function EntryDetailScreen({ route }) {
   const [entry, setEntry] = useState(null);
   const [reflection, setReflection] = useState(null);
   const [isRetrying, setIsRetrying] = useState(false);
+  
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedTranscript, setEditedTranscript] = useState('');
+  const [isRegenerating, setIsRegenerating] = useState(false);
 
   const loadData = useCallback(async () => {
     if (!entryId) return;
@@ -39,7 +43,9 @@ export default function EntryDetailScreen({ route }) {
         if (!isActive) return;
         const e = await getEntry(entryId);
         if (isActive) {
-          setEntry(e);
+          if (!isEditing) {
+            setEntry(e);
+          }
           if (e?.status === 'done' || e?.status === 'error') {
             if (e?.status === 'done') {
               const r = await getReflection(entryId);
@@ -54,7 +60,7 @@ export default function EntryDetailScreen({ route }) {
         isActive = false;
         clearInterval(interval);
       };
-    }, [entryId, loadData])
+    }, [entryId, loadData, isEditing])
   );
 
   const handleRetry = async () => {
@@ -94,6 +100,61 @@ export default function EntryDetailScreen({ route }) {
     } finally {
       setIsRetrying(false);
     }
+  };
+
+  const handleEditToggle = () => {
+    setEditedTranscript(entry.transcript);
+    setIsEditing(true);
+  };
+
+  const handleSaveEdit = async () => {
+    setIsEditing(false);
+    if (editedTranscript !== entry.transcript) {
+      await updateEntry(entryId, { transcript: editedTranscript, edited: 1 });
+      setEntry({ ...entry, transcript: editedTranscript, edited: 1 });
+    }
+  };
+
+  const handleCancelEdit = () => {
+    setIsEditing(false);
+    setEditedTranscript('');
+  };
+
+  const handleRegenerateReflection = async () => {
+    setIsRegenerating(true);
+    try {
+      const reflectionData = await processTextEntry(entry.transcript);
+      await updateReflection(entryId, {
+        mood: reflectionData.mood,
+        themes: reflectionData.themes,
+        summary: reflectionData.summary,
+        follow_up_question: reflectionData.follow_up_question,
+        model_version: 'gemini-3.6-flash (re-run)'
+      });
+      await loadData();
+    } catch (error) {
+      Alert.alert('Error', 'Failed to regenerate reflection. ' + error.message);
+    } finally {
+      setIsRegenerating(false);
+    }
+  };
+
+  const promptDelete = () => {
+    Alert.alert(
+      "Delete this entry?",
+      "This can't be undone.",
+      [
+        { text: "Cancel", style: "cancel" },
+        { 
+          text: "Delete", 
+          style: "destructive",
+          onPress: async () => {
+            await deleteEntry(entryId, entry.audio_uri);
+            navigation.goBack();
+          }
+        }
+      ]
+    );
   };
 
   if (!entry) {
@@ -157,7 +218,39 @@ export default function EntryDetailScreen({ route }) {
 
         {isDone && (
           <View style={styles.doneContainer}>
-            <Text style={styles.transcript}>{entry.transcript}</Text>
+            <View style={styles.transcriptHeader}>
+              <View style={styles.transcriptTitleRow}>
+                <Text style={styles.transcriptLabel}>Transcript</Text>
+                {entry.edited === 1 && <Text style={styles.editedBadge}>(Edited)</Text>}
+              </View>
+              {!isEditing && (
+                <TouchableOpacity onPress={handleEditToggle} style={styles.editButton}>
+                  <Text style={styles.editButtonText}>Edit</Text>
+                </TouchableOpacity>
+              )}
+            </View>
+
+            {isEditing ? (
+              <View style={styles.editContainer}>
+                <TextInput
+                  style={styles.textInput}
+                  multiline
+                  value={editedTranscript}
+                  onChangeText={setEditedTranscript}
+                  autoFocus
+                />
+                <View style={styles.editActions}>
+                  <TouchableOpacity onPress={handleCancelEdit} style={styles.cancelButton}>
+                    <Text style={styles.cancelButtonText}>Cancel</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={handleSaveEdit} style={styles.saveButton}>
+                    <Text style={styles.saveButtonText}>Save</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            ) : (
+              <Text style={styles.transcript}>{entry.transcript}</Text>
+            )}
 
             {reflection && (
               <View style={styles.reflectionCard}>
@@ -182,8 +275,25 @@ export default function EntryDetailScreen({ route }) {
                     <Text style={styles.questionText}>"{reflection.follow_up_question}"</Text>
                   </View>
                 )}
+                
+                <TouchableOpacity 
+                  style={styles.regenerateButton} 
+                  onPress={handleRegenerateReflection}
+                  disabled={isRegenerating || isEditing}
+                >
+                  {isRegenerating ? (
+                    <ActivityIndicator size="small" color={colors.slateGray} />
+                  ) : (
+                    <Text style={styles.regenerateButtonText}>Re-run reflection</Text>
+                  )}
+                </TouchableOpacity>
               </View>
             )}
+            
+            <TouchableOpacity style={styles.deleteButton} onPress={promptDelete}>
+              <Text style={styles.deleteButtonText}>Delete entry</Text>
+            </TouchableOpacity>
+
           </View>
         )}
         
@@ -288,6 +398,80 @@ const styles = StyleSheet.create({
   doneContainer: {
     marginTop: 10,
   },
+  transcriptHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  transcriptTitleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  transcriptLabel: {
+    fontFamily: fonts.mono,
+    fontSize: 12,
+    color: colors.slateGray,
+    textTransform: 'uppercase',
+  },
+  editedBadge: {
+    fontFamily: fonts.mono,
+    fontSize: 10,
+    color: colors.slateGray,
+    marginLeft: 8,
+    fontStyle: 'italic',
+  },
+  editButton: {
+    paddingHorizontal: 12,
+    paddingVertical: 4,
+  },
+  editButtonText: {
+    fontFamily: fonts.body,
+    fontSize: 14,
+    color: colors.slateGray,
+  },
+  editContainer: {
+    marginBottom: 32,
+  },
+  textInput: {
+    fontFamily: fonts.body,
+    fontSize: 18,
+    color: colors.paperWhite,
+    backgroundColor: colors.charcoal,
+    borderRadius: 8,
+    padding: 12,
+    borderWidth: 1,
+    borderColor: colors.hairline,
+    textAlignVertical: 'top',
+    minHeight: 120,
+  },
+  editActions: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    marginTop: 12,
+  },
+  cancelButton: {
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    marginRight: 8,
+  },
+  cancelButtonText: {
+    fontFamily: fonts.body,
+    fontSize: 14,
+    color: colors.slateGray,
+  },
+  saveButton: {
+    backgroundColor: colors.paperWhite,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+  },
+  saveButtonText: {
+    fontFamily: fonts.body,
+    fontSize: 14,
+    color: colors.obsidian,
+    fontWeight: 'bold',
+  },
   transcript: {
     fontFamily: fonts.body,
     fontSize: 18,
@@ -301,6 +485,7 @@ const styles = StyleSheet.create({
     padding: 24,
     borderWidth: 1,
     borderColor: colors.hairline,
+    marginBottom: 40,
   },
   pillContainer: {
     flexDirection: 'row',
@@ -354,6 +539,7 @@ const styles = StyleSheet.create({
     borderLeftWidth: 3,
     borderLeftColor: colors.paperWhite,
     paddingLeft: 16,
+    marginBottom: 24,
   },
   questionText: {
     fontFamily: fonts.display,
@@ -361,5 +547,31 @@ const styles = StyleSheet.create({
     color: colors.paperWhite,
     fontStyle: 'italic',
     lineHeight: 30,
+  },
+  regenerateButton: {
+    paddingVertical: 12,
+    alignItems: 'center',
+    borderTopWidth: 1,
+    borderTopColor: colors.hairline,
+    marginTop: 8,
+  },
+  regenerateButtonText: {
+    fontFamily: fonts.body,
+    fontSize: 14,
+    color: colors.slateGray,
+  },
+  deleteButton: {
+    paddingVertical: 16,
+    alignItems: 'center',
+    backgroundColor: 'rgba(255, 59, 48, 0.1)',
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 59, 48, 0.2)',
+  },
+  deleteButtonText: {
+    fontFamily: fonts.body,
+    fontSize: 16,
+    color: colors.errorRed,
+    fontWeight: 'bold',
   }
 });

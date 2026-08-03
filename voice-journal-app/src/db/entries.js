@@ -191,3 +191,39 @@ export const getStats = async () => {
     currentStreak: streak
   };
 };
+
+export const deleteEntry = async (id, audioUri) => {
+  const db = await openDatabase();
+  await db.runAsync('DELETE FROM reflections WHERE entry_id = ?', [id]);
+  await db.runAsync('DELETE FROM entries WHERE id = ?', [id]);
+  
+  if (audioUri) {
+    try {
+      await FileSystem.deleteAsync(audioUri, { idempotent: true });
+    } catch (e) {
+      console.error("Failed to delete audio file", e);
+    }
+  }
+};
+
+export const updateReflection = async (entryId, fields) => {
+  const db = await openDatabase();
+  const setClauses = [];
+  const values = [];
+  
+  for (const [key, value] of Object.entries(fields)) {
+    setClauses.push(`${key} = ?`);
+    if (key === 'themes' && value !== null) {
+      values.push(JSON.stringify(value));
+    } else {
+      values.push(value);
+    }
+  }
+  
+  if (setClauses.length === 0) return;
+  
+  values.push(entryId);
+  const sql = `UPDATE reflections SET ${setClauses.join(', ')} WHERE entry_id = ?`;
+  
+  await db.runAsync(sql, values);
+};

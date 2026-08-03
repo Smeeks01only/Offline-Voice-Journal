@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { colors, fonts } from '../theme/tokens';
 import { getRelativeTime } from '../utils/dateUtils';
 
-export default function EntryCard({ entry, onPress }) {
+export default function EntryCard({ entry, onPress, onLongPress }) {
   const isDone = entry.status === 'done';
   const isError = entry.status === 'error';
   
@@ -14,6 +14,7 @@ export default function EntryCard({ entry, onPress }) {
     <Pressable 
       style={({ pressed }) => [styles.card, pressed && { opacity: 0.7 }]}
       onPress={onPress}
+      onLongPress={onLongPress}
     >
       <View style={styles.cardHeader}>
         <Text style={styles.cardDate}>{formattedDate} • {getRelativeTime(entry.created_at)}</Text>

@@ -10,11 +10,12 @@ import { getSetting, setSetting, getStats, clearAllData, getAllEntries, getRefle
 import { useLock } from '../context/LockContext';
 import LockScreen from './LockScreen';
 
-export default function ProfileScreen() {
+export default function ProfileScreen({ navigation }) {
   const [displayName, setDisplayName] = useState('');
   const [stats, setStats] = useState({ totalEntries: 0, entriesThisWeek: 0, currentStreak: 0 });
   const { isLockEnabled, disableLock } = useLock();
   const [showSetupModal, setShowSetupModal] = useState(false);
+  const [isExporting, setIsExporting] = useState(false);
   
   const loadData = async () => {
     try {
@@ -43,6 +44,8 @@ export default function ProfileScreen() {
   };
 
   const handleExport = async () => {
+    if (isExporting) return;
+    setIsExporting(true);
     try {
       const entries = await getAllEntries();
       const exportData = [];
@@ -72,7 +75,11 @@ export default function ProfileScreen() {
       }
     } catch (e) {
       console.error("Failed to export data", e);
-      Alert.alert("Export Failed", "Could not export your entries.");
+      if (e.message && !e.message.includes('Another share request is being processed now')) {
+        Alert.alert("Export Failed", "Could not export your entries.");
+      }
+    } finally {
+      setIsExporting(false);
     }
   };
 
@@ -169,8 +176,14 @@ export default function ProfileScreen() {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Data Management</Text>
           
-          <TouchableOpacity style={styles.actionButton} onPress={handleExport}>
-            <Text style={styles.actionButtonText}>Export my entries</Text>
+          <TouchableOpacity style={styles.actionButton} onPress={handleExport} disabled={isExporting}>
+            <Text style={[styles.actionButtonText, isExporting && { opacity: 0.5 }]}>
+              {isExporting ? 'Exporting...' : 'Export my entries'}
+            </Text>
+          </TouchableOpacity>
+          
+          <TouchableOpacity style={styles.actionButton} onPress={() => navigation.navigate('PrivacyPolicy')}>
+            <Text style={styles.actionButtonText}>Privacy Policy</Text>
           </TouchableOpacity>
           
           <TouchableOpacity style={[styles.actionButton, styles.destructiveButton]} onPress={handleClearData}>

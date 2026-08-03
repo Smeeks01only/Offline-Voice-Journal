@@ -165,11 +165,86 @@ export const processEntry = async (audioUri) => {
         const cleanedText = rawText.replace(/```json\n/g, '').replace(/```/g, '').trim();
         return JSON.parse(cleanedText);
       } catch (retryError) {
-        throw new Error(`ParseError: Failed to parse Gemini response into JSON even after retry. Response was: ${rawText}`);
+        throw new Error(`ParseError: Failed to parse Gemini response into JSON even after retry.`);
       }
     } else {
       // It was an API or Network error, bubble it up natively
       throw error;
     }
+  }
+};
+
+export const processTextEntry = async (transcript) => {
+  const apiKey = getApiKey();
+  const model = 'gemini-3.6-flash';
+  
+  const promptText = `
+    Analyze the following journal entry transcript.
+    Extract and return ONLY a JSON object containing the reflection details.
+    Do not include any markdown formatting (like \`\`\`json), no preamble, no code fences. Just output the raw JSON.
+    
+    Transcript:
+    "${transcript}"
+  `;
+
+  const payload = {
+    model: model,
+    input: [
+      {
+        type: "text",
+        text: promptText
+      }
+    ],
+    response_format: {
+      type: "text",
+      mime_type: "application/json",
+      schema: {
+        type: "object",
+        properties: {
+          transcript: { type: "string", description: "The full transcription of what was said." },
+          mood: { type: "string", description: "A 1-2 word description of the emotional tone." },
+          themes: { type: "array", items: { type: "string" }, description: "2-4 primary topics discussed." },
+          summary: { type: "string", description: "A 1-2 sentence summary of the entry." },
+          follow_up_question: { type: "string", description: "A thoughtful question for the user to reflect on." }
+        },
+        required: ["transcript", "mood", "themes", "summary", "follow_up_question"]
+      }
+    }
+  };
+
+  const url = `https://generativelanguage.googleapis.com/v1beta/interactions`;
+  
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'x-goog-api-key': apiKey,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      if (response.status === 429) throw new Error('RateLimitError: Too many requests to Gemini API.');
+      if (response.status === 400 || response.status === 401 || response.status === 403) {
+        throw new Error(`InvalidKeyError: Unauthorized generating content (${response.status}): ${errorText}`);
+      }
+      throw new Error(`GeminiAPIError: Generation failed with status ${response.status}. Details: ${errorText}`);
+    }
+
+    const data = await response.json();
+    const outputStep = data.steps?.find(step => step.type === 'model_output');
+    const rawText = outputStep?.content?.[0]?.text || '';
+    
+    const cleanedText = rawText.replace(/```json\n/g, '').replace(/```/g, '').trim();
+    return JSON.parse(cleanedText);
+  } catch (error) {
+    if (error instanceof SyntaxError) {
+      throw new Error(`ParseError: Failed to parse Gemini response into JSON.`);
+    } else if (error.message.includes('Error')) {
+      throw error;
+    }
+    throw new Error(`NetworkError: Failed to fetch generation - ${error.message}`);
   }
 };
