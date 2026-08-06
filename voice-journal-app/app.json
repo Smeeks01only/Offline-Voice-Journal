@@ -6,6 +6,11 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "dark",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0E0E10"
+    },
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.charlton.voicejournal",
@@ -33,6 +38,11 @@
       "expo-sqlite",
       "expo-font",
       "expo-secure-store"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "9bcc7bce-c0c1-4266-9ee6-fd34e51933e7"
+      }
+    }
   }
 }
